@@ -4,12 +4,19 @@ import org.apache.camel.CamelContext;
 import org.apache.camel.impl.DefaultCamelContext;
 
 import camelroutes.MyTestRouteBuilder;
+import rabbitmq.tutorial.Recv;
+import rabbitmq.tutorial.Send;
 
 public class Starter {
 
 	public static boolean stopp = false;
 
 	public static void main(String[] args) {
+		startRabbitTestSend();
+//		startRabbitTestRecv();
+	}
+
+	private static void startCamelTest() {
 		CamelContext ctx = new DefaultCamelContext();
 
 		try {
@@ -28,7 +35,13 @@ public class Starter {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
-
+	
+	private static void startRabbitTestSend() {
+		new Send();
+	}
+	
+	private static void startRabbitTestRecv() {
+		new Recv();
+	}
 }

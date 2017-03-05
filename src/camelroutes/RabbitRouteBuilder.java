@@ -4,12 +4,12 @@ import org.apache.camel.builder.RouteBuilder;
 
 import camelprocessor.MyTestProcessor;
 
-public class MyTestRouteBuilder extends RouteBuilder {
+public class RabbitRouteBuilder extends RouteBuilder {
 
 	@Override
 	public void configure() throws Exception {
 		from("stream:in?promptMessage=Enter something:").process(new MyTestProcessor())
-				.to("file://camel/output?fileName=console.txt");
+				.to("rabbitmq://localhost/hallo_dofn?exchangeType=fanout&autoAck=true&autoDelete=true&durable=false");
 	}
 
 }

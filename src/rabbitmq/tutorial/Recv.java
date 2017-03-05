@@ -11,7 +11,7 @@ import com.rabbitmq.client.Envelope;
 import com.rabbitmq.client.AMQP.BasicProperties;
 
 public class Recv {
-	private final static String QUEUE_NAME = "hello";
+	private final static String QUEUE_NAME = "hallo";
 
 	public Recv() {
 		try {
@@ -20,19 +20,23 @@ public class Recv {
 			Connection connection = factory.newConnection();
 			Channel channel = connection.createChannel();
 
-			channel.queueDeclare(QUEUE_NAME, false, false, false, null);
-			System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
+			channel.exchangeDeclare("hallo_dofn", "fanout");
+
+			String queueName = channel.queueDeclare().getQueue();
+			channel.queueBind(queueName, "hallo_dofn", "");
 			
+			System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
+
 			Consumer consumer = new DefaultConsumer(channel) {
 				@Override
 				public void handleDelivery(String consumerTag, Envelope envelope, BasicProperties properties,
 						byte[] body) throws IOException {
 					String message = new String(body, "UTF-8");
-					System.out.println(" [x] Received '" + message +"'");
+					System.out.println(" [x] Received '" + message + "'");
 				}
 			};
-			
-			channel.basicConsume(QUEUE_NAME, true, consumer);
+
+			channel.basicConsume(queueName, true, consumer);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

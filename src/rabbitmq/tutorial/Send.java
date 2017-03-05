@@ -6,7 +6,7 @@ import com.rabbitmq.client.ConnectionFactory;
 
 public class Send {
 
-	private static final String QUEUE_NAME = "hello";
+	private static final String QUEUE_NAME = "hallo";
 
 	public Send() {
 		try {
@@ -15,10 +15,13 @@ public class Send {
 			Connection con = factory.newConnection();
 			Channel chan = con.createChannel();
 			
-			chan.queueDeclare(QUEUE_NAME, false, false, false, null);
+			chan.exchangeDeclare("hallo_dofn", "fanout");
+			
 			String message = "Hello World!";
-			chan.basicPublish("", QUEUE_NAME, null, message.getBytes());
+			
+			chan.basicPublish("hallo_dofn", "", null, message.getBytes("UTF-8"));
 			System.out.println(" [x] Sent '" + message + "'");
+			
 			chan.close();
 			con.close();
 		} catch (Exception e) {

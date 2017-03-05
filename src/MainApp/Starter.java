@@ -4,6 +4,7 @@ import org.apache.camel.CamelContext;
 import org.apache.camel.impl.DefaultCamelContext;
 
 import camelroutes.MyTestRouteBuilder;
+import camelroutes.RabbitRouteBuilder;
 import rabbitmq.tutorial.Recv;
 import rabbitmq.tutorial.Send;
 
@@ -12,7 +13,8 @@ public class Starter {
 	public static boolean stopp = false;
 
 	public static void main(String[] args) {
-		startRabbitTestSend();
+		startCamelTest();
+//		startRabbitTestSend();
 //		startRabbitTestRecv();
 	}
 
@@ -20,7 +22,7 @@ public class Starter {
 		CamelContext ctx = new DefaultCamelContext();
 
 		try {
-			ctx.addRoutes(new MyTestRouteBuilder());
+			ctx.addRoutes(new RabbitRouteBuilder());
 			ctx.start();
 
 			System.out.println("Context started");

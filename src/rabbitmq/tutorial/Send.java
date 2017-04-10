@@ -15,11 +15,11 @@ public class Send {
 			Connection con = factory.newConnection();
 			Channel chan = con.createChannel();
 			
-			chan.exchangeDeclare("hallo_dofn", "fanout");
+			chan.exchangeDeclare("hallo", "fanout");
 			
 			String message = "Hello World!";
 			
-			chan.basicPublish("hallo_dofn", "", null, message.getBytes("UTF-8"));
+			chan.basicPublish("hallo", "", null, message.getBytes("UTF-8"));
 			System.out.println(" [x] Sent '" + message + "'");
 			
 			chan.close();

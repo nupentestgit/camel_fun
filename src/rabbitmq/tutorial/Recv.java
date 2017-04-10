@@ -20,10 +20,10 @@ public class Recv {
 			Connection connection = factory.newConnection();
 			Channel channel = connection.createChannel();
 
-			channel.exchangeDeclare("hallo_dofn", "fanout");
+			channel.exchangeDeclare("hallo", "fanout");
 
 			String queueName = channel.queueDeclare().getQueue();
-			channel.queueBind(queueName, "hallo_dofn", "");
+			channel.queueBind(queueName, "hallo", "");
 			
 			System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
 

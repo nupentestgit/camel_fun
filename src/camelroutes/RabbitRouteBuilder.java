@@ -9,7 +9,7 @@ public class RabbitRouteBuilder extends RouteBuilder {
 	@Override
 	public void configure() throws Exception {
 		from("stream:in?promptMessage=Enter something:").process(new MyTestProcessor())
-				.to("rabbitmq://localhost/hallo_dofn?exchangeType=fanout&autoAck=true&autoDelete=true&durable=false");
+				.to("rabbitmq://localhost/hallo?exchangeType=fanout&autoAck=true&autoDelete=true&durable=false");
 	}
 
 }

@@ -5,16 +5,14 @@ import org.apache.camel.Processor;
 
 import MainApp.Starter;
 
-public class MyTestProcessor implements Processor {
+public class NettyTestRespProcessor implements Processor {
 
 	public void process(Exchange exchange) throws Exception {
 		String msg = exchange.getIn().getBody(String.class);
 
-		Starter.stopp = msg.equals("exit");
+		String resp = "Got response from Broker: " + msg;
 
-//		msg = msg.toUpperCase();
-
-		exchange.getIn().setBody(msg);
+		exchange.getIn().setBody(resp);
 	}
 
 }

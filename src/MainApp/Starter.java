@@ -3,8 +3,8 @@ package MainApp;
 import org.apache.camel.CamelContext;
 import org.apache.camel.impl.DefaultCamelContext;
 
-import camelroutes.MyTestRouteBuilder;
-import camelroutes.RabbitRouteBuilder;
+import camelroutes.NettyTestBrokerRoute;
+import camelroutes.NettyTestEchoRoute;
 import rabbitmq.tutorial.Recv;
 import rabbitmq.tutorial.Send;
 
@@ -14,15 +14,16 @@ public class Starter {
 
 	public static void main(String[] args) {
 		startCamelTest();
-//		startRabbitTestSend();
-//		startRabbitTestRecv();
+		// startRabbitTestSend();
+		// startRabbitTestRecv();
 	}
 
 	private static void startCamelTest() {
 		CamelContext ctx = new DefaultCamelContext();
 
 		try {
-			ctx.addRoutes(new RabbitRouteBuilder());
+			ctx.addRoutes(new NettyTestBrokerRoute());
+			ctx.addRoutes(new NettyTestEchoRoute());
 			ctx.start();
 
 			System.out.println("Context started");
@@ -38,11 +39,11 @@ public class Starter {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private static void startRabbitTestSend() {
 		new Send();
 	}
-	
+
 	private static void startRabbitTestRecv() {
 		new Recv();
 	}
